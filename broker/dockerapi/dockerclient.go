@@ -4,7 +4,7 @@ import (
     "bytes"
     "errors"
     "fmt"
-    "github.rtp.raleigh.ibm.com/bluemix/docker-broker/broker/brokerapi"
+    "github.com/brahmaroutu/docker-broker/broker/brokerapi"
     "io/ioutil"
     "net"
     "net/http"

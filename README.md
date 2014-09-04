@@ -30,7 +30,7 @@ Quick Start Guide
 -----------------
 To get the CloudFoundry Docker Broker running and connected to your Cloud Foundry environment, do the following:
 * Get a fresh Ubuntu VM and sudo to root
-* `curl -k http://github.rtp.raleigh.ibm.com/bluemix/docker-broker/raw/master/bin/install | bash`
+* `curl -k http://github.com/brahmaroutu/docker-broker/raw/master/bin/install | bash`
 This will install Docker, download the CloudFoundry Service Broker and compile it. If 'curl' is not available then do the following first: `apt-get update && apt-get install -y curl`
 
 Note: the above works for Ubuntu. For other operating system you may need to modify the `install` script first.
@@ -39,7 +39,7 @@ By default the configuration files are setup to use the IP address on the eth0 a
 
 To start the database, Broker and Agent, run:
 ```
-cd src/github.rtp.raleigh.ibm.com/bluemix/docker-broker
+cd src/github.com/brahmaroutu/docker-broker
 bin/start
 ```
 This brings all 3 up on this one VM. The Broker is listening on port 9998 by default. You are now ready to connect it to a CloudFoundry instance. Note: its critical that your CloudFoundry install can reach the Broker and the Docker containers, so make sure the IP address used for the `servicehost` in the agent.config and the IP address used in the create-service-broker command below is accessible to your CloudFoundry install and apps.

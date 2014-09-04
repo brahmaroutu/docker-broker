@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.rtp.raleigh.ibm.com/bluemix/docker-broker/broker",
+	"ImportPath": "github.com/brahmaroutu/docker-broker/broker",
 	"GoVersion": "go1.3",
 	"Deps": [
 		{
