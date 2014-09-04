@@ -1,11 +1,11 @@
-CloudFoundry Docker Broker
+Cloud Foundry Docker Broker
 ================
-CloudFoundry Docker Broker implements the Cloud Foundry Service broker API to provide management of Docker-based service instances that can be bound to an application running in Cloud Foundry.  Some of the main features of CloudFoundry Docker Broker include:
-* Can be run anywhere; as a standalone executable, as a CloudFoundry app or inside a Container
+Cloud Foundry Docker Broker implements the Cloud Foundry Service broker API to provide management of Docker-based service instances that can be bound to an application running in Cloud Foundry.  Some of the main features of Cloud Foundry Docker Broker include:
+* Can be run anywhere; as a standalone executable, as a Cloud Foundry app or inside a Container
 * Supports static as well as service generated credentials
 * Supports static, multi-tenant as well as pre-existing service instances
 * TLS/SSL support 
-* Can be scaled to support large number of CloudFoundry applications as well as any number of Docker hosts
+* Can be scaled to support large number of Cloud Foundry applications as well as any number of Docker hosts
 
 The basic architecture is as follows:
 ![Broker Architecture](docs/arch.png)
@@ -13,9 +13,9 @@ The basic architecture is as follows:
 There are two main components: a Broker and Agents:
 Broker
 ------
-The Broker is the component that interacts with CloudFoundry and manages the lifecycle of the CloudFoundry service instances. More than one instance of a Broker can be executed at a time, thus allowing it to scale as needed. All of its persistence is stored in a DB that is shared across all Broker instances.
+The Broker is the component that interacts with Cloud Foundry and manages the lifecycle of the Cloud Foundry service instances. More than one instance of a Broker can be executed at a time, thus allowing it to scale as needed. All of its persistence is stored in a DB that is shared across all Broker instances.
 
-As CloudFounder service instance operations are requested, the Broker will interact directly with a Docker host. For example, during the provisioning request of a new service instance, the Broker will choose ones the available Docker hosts to create a new Docker container for the service instance.
+As Cloud Foundry service instance operations are requested, the Broker will interact directly with a Docker host. For example, during the provisioning request of a new service instance, the Broker will choose ones the available Docker hosts to create a new Docker container for the service instance.
 
 The Broker's configuration contains the list of available service instances, represented by Docker images. See the details about the Broker's configuration file for more details.
 
@@ -28,21 +28,21 @@ Aside from registering a Docker host with the Broker, the Agent will also tell t
 
 Quick Start Guide
 -----------------
-To get the CloudFoundry Docker Broker running and connected to your Cloud Foundry environment, do the following:
+To get the Cloud Foundry Docker Broker running and connected to your Cloud Foundry environment, do the following:
 * Get a fresh Ubuntu VM and sudo to root
 * `curl -k http://github.com/brahmaroutu/docker-broker/raw/master/bin/install | bash`
-This will install Docker, download the CloudFoundry Service Broker and compile it. If 'curl' is not available then do the following first: `apt-get update && apt-get install -y curl`
+This will install Docker, download the Cloud Foundry Service Broker and compile it. If 'curl' is not available then do the following first: `apt-get update && apt-get install -y curl`
 
 Note: the above works for Ubuntu. For other operating system you may need to modify the `install` script first.
 
-By default the configuration files are setup to use the IP address on the eth0 adapter as the IP address to use for your CloudFoundry service instances. You can modify this by editing the `servicehost` property in the config/agent.config file.
+By default the configuration files are setup to use the IP address on the eth0 adapter as the IP address to use for your Cloud Foundry service instances. You can modify this by editing the `servicehost` property in the config/agent.config file.
 
 To start the database, Broker and Agent, run:
 ```
 cd src/github.com/brahmaroutu/docker-broker
 bin/start
 ```
-This brings all 3 up on this one VM. The Broker is listening on port 9998 by default. You are now ready to connect it to a CloudFoundry instance. Note: its critical that your CloudFoundry install can reach the Broker and the Docker containers, so make sure the IP address used for the `servicehost` in the agent.config and the IP address used in the create-service-broker command below is accessible to your CloudFoundry install and apps.
+This brings all 3 up on this one VM. The Broker is listening on port 9998 by default. You are now ready to connect it to a Cloud Foundry instance. Note: its critical that your Cloud Foundry install can reach the Broker and the Docker containers, so make sure the IP address used for the `servicehost` in the agent.config and the IP address used in the create-service-broker command below is accessible to your Cloud Foundry install and apps.
 
 First create a new service broker, for the purposes of this example we will use `192.168.1.1` as the IP of the Ubuntu VM:
 ```
@@ -61,7 +61,7 @@ The two services available are both `mysql` but the `mysqlstatic` one uses a set
 
 Adding New Services
 ===================
-Brokers provide the capability to invoke CloudFoundry Lifecycle commands that gets called during the CloudFoundry provisioning, bind, unbind and deprovision steps. During each of the CloudFoundry provision steps, the Broker will invoke the corresponding `/provision`, `/bind`, `/unbind` and `/deprovision` executable found in the Docker container for the service instance. Each script is responsible for taking any actions necessary to prepare the service for that stage of the lifecycle - for example: 
+Brokers provide the capability to invoke Cloud Foundry Lifecycle commands that gets called during the Cloud Foundry provisioning, bind, unbind and deprovision steps. During each of the Cloud Foundry provision steps, the Broker will invoke the corresponding `/provision`, `/bind`, `/unbind` and `/deprovision` executable found in the Docker container for the service instance. Each script is responsible for taking any actions necessary to prepare the service for that stage of the lifecycle - for example: 
 
 * `/provision` may create a new database instance, while `/deprovision` may delete it.
 * `/bind` may create credentials to access the service and returns those credentials as a JSON object to stdout.
@@ -109,9 +109,9 @@ port | Listen port to use for this Broker.
 .user | User name to use for incoming REST requests to modify the list of services or agent authentication.  
 .password | Password to use for incoming REST requests to modify the list of services.
 .catalog | Name of the catalog
-.images | List of Docker images to expose as CloudFoundry services.
+.images | List of Docker images to expose as Cloud Foundry services.
 .images.name | Name of the service to expose in CF.
-.images.plan | CloudFoundry's "plan" value.
+.images.plan | Cloud Foundry's "plan" value.
 .images.dashboardurl | URL to the dashboard for this service.
 .images.credentials | An optional set of credentials that the Broker should use for service instances. When set the Broker will NOT attempt to use the bind and provision lifecycle scripts within the Docker container.
 .images.credentials.* | Service defined credentials.
@@ -123,7 +123,7 @@ The following table describes the properties in the `agent.config` file:
 
 Property | Description
 -------- | -----------
-**serviceagent** | Fields related to interacting with the Broker and how CloudFoundry apps should interact with the service instances
+**serviceagent** | Fields related to interacting with the Broker and how Cloud Foundry apps should interact with the service instances
 .servicehost | Host IP (or name) that the Broker should use within the credentials for services hosted on this Docker host. $HOST in the credentials will be substitued with this value.  Additionally, $PORT will be replaced with the Docker host port that is mapped to the services EXPOSE'd port.
 .dockerhost | Host IP (or name) that the Broker should use when connecting to this Docker host.
 .dockerport | Port that the Broker should use when connecting to this Docker host.
