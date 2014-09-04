@@ -51,8 +51,8 @@ cf create-service-broker dockerBroker admin admin http://192.168.1.1:9998
 
 Now make the available services visible:
 ```
-cf enable-service-access mysql-docker -p 100 -o <\your_org_name\>
-cf enable-service-access mysqlstatic-docker -p 100 -o \your_org_name\>
+cf enable-service-access mysql-docker -p 100 -o <your_org_name>
+cf enable-service-access mysqlstatic-docker -p 100 -o <your_org_name>
 ```
 
 You should now be able to see and use these new services, try `cf m` to make sure they're visble to you.
