@@ -1,0 +1,9 @@
+---
+applications:
+- name: broker
+  memory: 8M
+  instances: 1
+  buildpack: https://github.com/michaljemala/cloudfoundry-buildpack-go.git
+  host: cf-broker-${random-word}
+  domain: 10.244.0.34.xip.io
+  path: .

@@ -1,0 +1,10 @@
+cd dockerapi
+rm -f broker_testdb
+sqlite3 broker_testdb < ../setup_sqlite.sql
+ginkgo
+rm -f broker_testdb
+cd ../brokerapi
+rm -f broker_testdb
+sqlite3 broker_testdb < ../setup_sqlite.sql
+ginkgo
+rm -f broker_testdb

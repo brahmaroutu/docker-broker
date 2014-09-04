@@ -1,0 +1,28 @@
+#!/bin/bash
+# Usage: provision.sh [ DB user password]
+
+# wait for mysqld to start
+while true; do
+  mysqladmin ping > /dev/null 2>&1
+  ret=$?
+  if [ $ret -ne 1 -a $ret -ne 11 ]; then
+    break 
+  fi
+  sleep 1
+done
+
+DB=${1:-DB$RANDOM}
+user=${2:-user$RANDOM}
+password=${3:-$RANDOM}
+url="mysql://$user:$password@\$HOST:\$PORT/$DB"
+
+cat <<EOF > /credentials
+{ "host": "\$HOST", "port": "\$PORT",
+  "user": "$user", "password": "$password",
+  "database": "$DB", "url": "$url" }
+EOF
+
+mysqladmin create $DB
+mysql -e "CREATE USER '$user'@'%' IDENTIFIED by '$password'"
+mysql -e "GRANT ALL PRIVILEGES ON *.* to '$user'@'%' WITH GRANT OPTION"
+mysql -e "FLUSH PRIVILEGES"

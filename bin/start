@@ -1,0 +1,20 @@
+#!/bin/bash
+# Usage: $0
+
+docker start brokerdb 2> /dev/null || {
+  echo Creating a new DB
+  docker run --name="brokerdb" -d -p 3306:3306 brokerdb
+}
+
+echo Waiting for DB to start...
+sleep 10 # give it time to start DB
+
+echo Starting broker...
+broker/broker -config=config/broker.config > broker.out 2>&1 &
+sleep 2
+echo Starting agent...
+agent/agent -config=config/agent.config   > agent.out 2>&1 &
+
+echo
+echo Broker output can be seen at: broker.out
+echo Agent output can eb seen at: agent.out

@@ -1,0 +1,25 @@
+#!/bin/bash
+set -xe
+
+target=${1:-all}
+
+if [[ "$target" == "broker" || "$target" == "all" ]]; then
+  cd broker
+  go build
+  docker build -t brokerdb .
+  cd ..
+fi
+
+if [[ "$target" == "agent" || "$target" == "all" ]]; then
+  cd agent
+  go build
+  cd ..
+fi
+
+if [[ "$target" == "services" || "$target" == "all" ]]; then
+  cd services/mysql
+  docker build -t mysql .
+  cd ../mysqlstatic
+  docker build -t mysqlstatic .
+  cd ../..
+fi

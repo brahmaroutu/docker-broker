@@ -1,0 +1,22 @@
+{
+    "serviceagent": {
+        "servicehost" : "127.0.0.1",
+        "dockerhost"  : "127.0.0.1",
+        "dockerport"  : 2375,
+        "isactive"    : true,  
+        "keepalive"   : 60,
+        "ExecCommand" : "DockerCommandExec",
+        "ExecArgs"    : "boot2docker,ssh,sudo",
+        "perffactor"  : 1.22,
+        "portbind_min": 49156,
+        "portbind_max": 49999
+    },
+    "brokerservers": [
+        {
+            "host"     : "127.0.0.1",
+            "port"     : 9998,
+            "user"     : "admin",
+            "password" : "admin"
+        }
+    ]
+}

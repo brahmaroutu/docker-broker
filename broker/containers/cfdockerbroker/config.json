@@ -1,0 +1,41 @@
+{ "dispatcher": "SimpleDispatcher",
+  "listenIP": "0.0.0.0",
+  "port": 9998,
+
+  "persister": {
+      "driver": "mysql",
+      "host": "localhost",
+      "port": 3306,
+      "user": "docker",
+      "password": "docker",
+      "database": "dockerbroker"
+  },
+
+  "services": {
+      "user": "admin",
+      "password": "admin",
+      "catalog": "My Docker Catalog",
+      "images": [
+          { "name": "mysqlstatic",
+            "plan": "100",
+            "dashboardurl": {
+                "dashboard_url":"mysql://docker:docker@$HOST:$PORT/dockerbroker"
+            },
+            "credentials": {
+                "database":"dockerbroker",
+                "url":"mysql://docker:docker@$HOST:$PORT/dockerbroker",
+                "uri":"mysql://docker:docker@$HOST:$PORT/dockerbroker",
+                "host":"$HOST",
+                "port":"$PORT",
+                "user":"docker",
+                "username":"docker",
+                "password":"docker"
+            },
+            "numinstances": 1 
+          },
+          { "name": "mysql",
+            "plan": "100",
+            "numinstances": 1 }
+       ]
+  }
+}

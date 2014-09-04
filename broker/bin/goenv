@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -e -x
+
+if ! which go 2>/dev/null; then
+  echo "Go is not installed."
+  exit 1
+fi
+
+broker_dir=$(cd $(dirname $0)/.. && pwd)
+local_gopath=$broker_dir/Godeps/_workspace
+
+mkdir -p $local_gopath/bin
+
+export GOPATH=$local_gopath:$GOPATH
+export PATH=$local_gopath/bin:$PATH

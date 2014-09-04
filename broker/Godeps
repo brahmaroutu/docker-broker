@@ -1,0 +1,27 @@
+{
+	"ImportPath": "github.rtp.raleigh.ibm.com/bluemix/docker-broker/broker",
+	"GoVersion": "go1.3",
+	"Deps": [
+		{
+			"ImportPath": "github.com/go-sql-driver/mysql",
+			"Comment": "v1.2-1-g7094cf0",
+			"Rev": "7094cf0331ed6bde3cd75aa5d1da0e7764b526c9"
+		},
+		{
+			"ImportPath": "github.com/gorilla/context",
+			"Rev": "1f3e8a46c5bb4c29971d9867ede6e198ca5eddce"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Rev": "9ede152210fa25c1377d33e867cb828c19316445"
+		},
+		{
+			"ImportPath": "github.com/lib/pq",
+			"Rev": "8a6a4529571d69ac3646a3c129e96ff81d40e5aa"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-sqlite3",
+			"Rev": "9ac94b6fbfda6f25be5e3c17073aeed6de10428a"
+		}
+	]
+}

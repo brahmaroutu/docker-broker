@@ -1,0 +1,109 @@
+#!/bin/bash
+# Quickpath - Create a fresh Ubuntu VM, "sudo su" to root and run this via:
+#   curl -k https://github.rtp.raleigh.ibm.com/bluemix/docker-broker/raw/master/bin/install | bash
+# if 'curl' is not availble then first run:
+#   apt-get update && apt-get install -y curl
+
+set -ex
+
+cd $HOME
+  
+# Prep stuff
+##############
+apt-get update
+apt-get install -y curl gcc git-core
+    
+# Get our repo
+################
+rm -rf src/github.rtp.raleigh.ibm.com/bluemix
+mkdir -p src/github.rtp.raleigh.ibm.com/bluemix
+cd src/github.rtp.raleigh.ibm.com/bluemix
+git clone http://github.rtp.raleigh.ibm.com/bluemix/docker-broker.git
+cd docker-broker
+
+# Install Docker and open it up on port 2375
+##############################################
+if [[ ! -f /etc/systemd/system/docker-tcp.socket ]]; then
+  cat <<EOF > /etc/systemd/system/docker-tcp.socket
+[Unit]
+Description=Docker Socket for the API
+  
+[Socket]
+ListenStream=2375
+BindIPv6Only=both
+Service=docker.service
+    
+[Install]
+WantedBy=sockets.target
+EOF
+fi
+
+# Install Docker if not already here
+grep 127.0.0.1 /etc/default/docker > /dev/null 2>&1 || {
+  curl -sSL https://get.docker.io/ubuntu/ | sudo sh
+  export DOCKER_HOST=tcp://127.0.0.1:2375
+  
+  DOCKER_OPTS="-r -H 127.0.0.1:2375 -H unix:\\/\\/\\/var\\/run\\/docker.sock"
+  sed -i "s/.*_OPTS=.*/DOCKER_OPTS=\"$DOCKER_OPTS\"/g" /etc/default/docker
+  service docker restart 
+  sleep 5
+}
+
+# Need nsenter to run commands in existing containers
+if [[ ! -x /usr/local/bin/docker-enter ]]; then
+  docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
+fi
+
+# Install GO if not already there
+###################################
+which go > /dev/null 2>&1 || {
+  GO_TGZ=https://storage.googleapis.com/golang/go1.3.1.linux-amd64.tar.gz
+  wget $GO_TGZ -O go.tgz
+  tar -C /usr/local -xzf go.tgz
+  rm go.tgz
+  export PATH=$PATH:/usr/local/go/bin
+  grep go/bin ~/.profile > /dev/null 2>&1 || \
+    echo "export PATH=\$PATH:/usr/local/go/bin" >> ~/.profile
+}
+
+export GOPATH=$HOME:$GOPATH
+
+# Compile
+###########
+cd broker
+go get
+cd ../agent
+go get
+cd ..
+
+bin/build
+
+# Setup default config info
+#############################
+servicehost=`ifconfig eth0|grep 'inet addr:'|cut -d: -f2|awk '{ print $1}'`
+dockerhost=127.0.0.1
+
+cat config/agent.config | \
+  sed "s/\(.*servicehost\".*\"\).*\(\".*\)/\1$servicehost\2/g" | \
+  sed "s/\(.*dockerhost\".*\"\).*\(\".*\)/\1$dockerhost\2/g" > a.c
+mv a.c config/agent.config
+
+set +x
+
+echo ; echo
+echo New Docker image \"brokerdb\" is defined for use as the Broker\'s DB.
+echo Agent is configured with a servicehost of: $servicehost
+echo Broker is configured to talk to Docker at: $dockerhost:2375
+echo You can edit these by modifying:
+echo "     $PWD/config/*.config"
+echo
+echo To run the DB, Broker and Agent, execute: 
+echo "     cd $PWD"
+echo "     bin/start"
+echo
+echo "To connect CloudFoundry to this broker, add a new service broker:"
+echo "     cf create-service-broker <name> admin admin http://$servicehost:9998"
+echo You will then need to make the service public via the:
+echo "     cf enable-service-access ..."
+echo command. To see the list of availale services and their access rights, use:
+echo "     cf service-access"
