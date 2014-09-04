@@ -1,9 +1,9 @@
 package dockerapi_test
 
 import (
-    "github.rtp.raleigh.ibm.com/bluemix/docker-broker/broker/dockerapi"
-    "github.rtp.raleigh.ibm.com/bluemix/docker-broker/broker/brokerapi"
-    "github.rtp.raleigh.ibm.com/bluemix/docker-broker/broker/testhelpers"
+    "github.com/brahmaroutu/docker-broker/broker/dockerapi"
+    "github.com/brahmaroutu/docker-broker/broker/brokerapi"
+    "github.com/brahmaroutu/docker-broker/broker/testhelpers"
     . "github.com/onsi/ginkgo"
     . "github.com/onsi/gomega"
     "net/http"

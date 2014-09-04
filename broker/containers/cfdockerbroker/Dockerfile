@@ -28,9 +28,9 @@ RUN go get "github.com/gorilla/mux"
 RUN go get "github.com/lib/pq"
 RUN go get "github.com/mattn/go-sqlite3"
   
-RUN mkdir -p ~/go/src/github.rtp.raleigh.ibm.com/bluemix/docker-broker/broker
-RUN cp -R /broker/* ~/go/src/github.rtp.raleigh.ibm.com/bluemix/docker-broker/broker
-RUN cd ~/go/src/github.rtp.raleigh.ibm.com/bluemix/docker-broker/broker
+RUN mkdir -p ~/go/src/github.com/brahmaroutu/docker-broker/broker
+RUN cp -R /broker/* ~/go/src/github.com/brahmaroutu/docker-broker/broker
+RUN cd ~/go/src/github.com/brahmaroutu/docker-broker/broker
 
 EXPOSE 3306
 EXPOSE 9998

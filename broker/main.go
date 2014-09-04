@@ -2,8 +2,8 @@ package main
 
 import (
     "flag"
-    "github.rtp.raleigh.ibm.com/bluemix/docker-broker/broker/brokerapi"
-    "github.rtp.raleigh.ibm.com/bluemix/docker-broker/broker/dockerapi"
+    "github.com/brahmaroutu/docker-broker/broker/brokerapi"
+    "github.com/brahmaroutu/docker-broker/broker/dockerapi"
     "log"
     "os"
 )

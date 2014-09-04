@@ -2,7 +2,7 @@ package dockerapi
 
 import (
     "errors"
-    "github.rtp.raleigh.ibm.com/bluemix/docker-broker/broker/brokerapi"
+    "github.com/brahmaroutu/docker-broker/broker/brokerapi"
     "math/rand"
 )
 

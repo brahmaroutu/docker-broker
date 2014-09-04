@@ -7,7 +7,7 @@ import (
     "net/url"
     "strings"
     "reflect"
-    "github.rtp.raleigh.ibm.com/bluemix/docker-broker/broker/brokerapi"    
+    "github.com/brahmaroutu/docker-broker/broker/brokerapi"    
     "github.com/onsi/ginkgo"
 )
 

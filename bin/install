@@ -1,6 +1,6 @@
 #!/bin/bash
 # Quickpath - Create a fresh Ubuntu VM, "sudo su" to root and run this via:
-#   curl -k https://github.rtp.raleigh.ibm.com/bluemix/docker-broker/raw/master/bin/install | bash
+#   curl -k https://github.com/brahmaroutu/docker-broker/raw/master/bin/install | bash
 # if 'curl' is not availble then first run:
 #   apt-get update && apt-get install -y curl
 
@@ -15,10 +15,10 @@ apt-get install -y curl gcc git-core
     
 # Get our repo
 ################
-rm -rf src/github.rtp.raleigh.ibm.com/bluemix
-mkdir -p src/github.rtp.raleigh.ibm.com/bluemix
-cd src/github.rtp.raleigh.ibm.com/bluemix
-git clone http://github.rtp.raleigh.ibm.com/bluemix/docker-broker.git
+rm -rf src/github.com/brahmaroutu
+mkdir -p src/github.com/brahmaroutu
+cd src/github.com/brahmaroutu
+git clone http://github.com/brahmaroutu/docker-broker.git
 cd docker-broker
 
 # Install Docker and open it up on port 2375
